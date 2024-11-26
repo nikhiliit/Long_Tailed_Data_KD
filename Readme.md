@@ -1,4 +1,4 @@
-# Long Tail Data Distillation with Flask
+# Handling Long Tail Data Distirbutions
 
 This project is a web-based image classification tool that utilizes a ResNet50 model trained on CIFAR-100 classes. The app allows users to classify images by either uploading their own images or selecting from a set of predefined images.
 
