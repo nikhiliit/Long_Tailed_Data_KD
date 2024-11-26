@@ -12,8 +12,11 @@ This project is a web-based image classification tool that utilizes a Teacher-St
 
 ## Demo
 
-![Alt Text](static/demo/Teacher_r.png "Wrong Prediction by Teacher Model")
-![Alt Text](static/demo/Student_r.png "Right Prediction by Student Model") 
+
+**Wrong Prediction by Teacher Model
+![Alt Text](static/demo/Teacher_w1.png "Wrong Prediction by Teacher Model")
+**Right Prediction by Teacher Model
+![Alt Text](static/demo/Student_w1.png "Right Prediction by Student Model") 
 ## Prerequisites
 
 * **Python 3.6 or above**
