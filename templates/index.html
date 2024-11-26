@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Styles for the fixed header */
+        header {
+            background-color: #c00;
+            padding: 1rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        /* Adjust container padding to avoid overlap with the fixed header */
+        .container {
+            padding-top: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- App Bar with Logo and Title -->
+    <header style="text-align: center;">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 100px; height: 40px;">
+        <h1>Long Tail Data Distillation</h1>
+    </header>
+
+    <div class="container">
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="model_type">Select Model:</label>
+            <select id="model_type" name="model_type">
+                <option value="teacher">Teacher Model</option>
+                <option value="student">Student Model</option>
+            </select>
+
+            <br><br>
+
+            <!-- Toggle between upload or select predefined -->
+            <label>Choose Image Source:</label>
+            <div>
+                <input type="radio" id="upload-option" name="image-source" value="upload" onclick="toggleImageSource()" checked>
+                <label for="upload-option">Upload Image</label>
+                
+                <input type="radio" id="predefined-option" name="image-source" value="predefined" onclick="toggleImageSource()">
+                <label for="predefined-option">Select Predefined Image</label>
+            </div>
+
+            <br>
+
+            <!-- Upload Image Input -->
+            <div id="upload-container">
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" onchange="showPreview(event, 'file')">
+            </div>
+
+            <!-- Select Predefined Image Dropdown -->
+            <div id="predefined-container" style="display: none;">
+                <label for="image-select">Select Predefined Image:</label>
+                <select id="image-select" name="image-select" onchange="showPreview(event, 'predefined')">
+                    <option value="">Select an image</option>
+                    {% for image in image_list %}
+                    <option value="{{ image }}">{{ image }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <script>
+                // Update the displayed threshold value when slider moves and store it
+                document.getElementById('threshold').oninput = function() {
+                    const thresholdValue = this.value;
+                    document.getElementById('threshold-value').textContent = thresholdValue;
+                    // Store threshold value as a data attribute to access in submitForm
+                    document.getElementById('threshold').setAttribute('data-threshold', thresholdValue);
+                }
+            </script>
+            </script>
+            <br><br>
+
+            <button type="button" onclick="submitForm()">Classify Image</button>
+        </form>
+
+        <!-- Image preview container -->
+        <div id="preview-container" style="margin-top: 20px;">
+            <h3>Image Preview:</h3>
+            <img id="image-preview" src="" alt="Selected Image" style="max-width: 100%; max-height: 300px; display: none; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+        </div>
+
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+        // Function to toggle between upload and predefined selection
+        function toggleImageSource() {
+            const uploadContainer = document.getElementById('upload-container');
+            const predefinedContainer = document.getElementById('predefined-container');
+            
+            if (document.getElementById('upload-option').checked) {
+                uploadContainer.style.display = 'block';
+                predefinedContainer.style.display = 'none';
+            } else {
+                uploadContainer.style.display = 'none';
+                predefinedContainer.style.display = 'block';
+            }
+
+            // Reset the preview if switching between options
+            document.getElementById('image-preview').style.display = 'none';
+        }
+
+        // Function to show the preview of the selected image
+        function showPreview(event, source) {
+            const preview = document.getElementById('image-preview');
+            
+            if (source === 'file') {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else if (source === 'predefined') {
+                const selectedImage = event.target.value;
+                if (selectedImage) {
+                    preview.src = `{{ url_for('static', filename='images/') }}${selectedImage}`;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
+            }
+        }
+
+        // Function to submit the form
+        async function submitForm() {
+    const form = document.getElementById('upload-form');
+    const formData = new FormData(form);
+
+    const response = await fetch('/predict', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+    document.getElementById('result').innerText = result.predicted_class
+        ? `Predicted Class: ${result.predicted_class}`
+                : `Error: ${result.error}`;
+        }
+    </script>
+</body>
+</html>
