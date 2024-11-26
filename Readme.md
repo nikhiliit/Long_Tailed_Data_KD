@@ -10,9 +10,6 @@ This project is a web-based image classification tool that utilizes a Teacher-St
 * **Preview**: View a preview of the selected image before classification.
 * **Result**: Display the predicted class of the image.
 
-## Demo
-(Replace with an actual screenshot if available)
-
 ## Prerequisites
 
 * **Python 3.6 or above**
@@ -46,12 +43,12 @@ This project is a web-based image classification tool that utilizes a Teacher-St
     Note :- Most of the datasets used in this experiments can be directly fetch fro the Pytroch library.
    Step 1 : Train the teacher model
     ```bash
-    cd ./Our_proposal
+    cd ./Proposed_Model
     python teacher.py
     ```
     Step 2 : Do Knowledge Distillation for a Student Model. Update the teacher model directory in the code line 508.
     ```bash
-    cd ./Our_proposal
+    cd ./Proposed_Model
     python student.py
     ```
     
