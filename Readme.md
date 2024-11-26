@@ -43,7 +43,7 @@ This project is a web-based image classification tool that utilizes a Teacher-St
     Note :- Most of the datasets used in this experiments can be directly fetch fro the Pytroch library.
    Step 1 : Train the teacher model
     ```bash
-    cd ./Proposed Model
+    cd ./Proposed_Model
     python teacher.py
     ```
     Step 2 : Do Knowledge Distillation for a Student Model. Update the teacher model directory in the code line 508.
