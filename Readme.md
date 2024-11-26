@@ -10,6 +10,10 @@ This project is a web-based image classification tool that utilizes a Teacher-St
 * **Preview**: View a preview of the selected image before classification.
 * **Result**: Display the predicted class of the image.
 
+## Demo
+
+![Alt Text](static/demo/Teacher_r.png "Wrong Prediction by Teacher Model")
+![Alt Text](static/demo/Student_r.png "Right Prediction by Student Model") 
 ## Prerequisites
 
 * **Python 3.6 or above**
