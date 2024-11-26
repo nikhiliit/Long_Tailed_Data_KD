@@ -25,8 +25,8 @@ This project is a web-based image classification tool that utilizes a Teacher-St
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/image-classification-flask.git
-    cd image-classification-flask
+    git clone https://github.com/nikhiliit/handling_long_tailed_data
+    cd handling_long_tailed_data
     ```
 
 2. **Create a virtual environment (recommended):**
