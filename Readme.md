@@ -1,6 +1,7 @@
 # Handling Long Tail Data Distirbutions
 
-This project is a web-based image classification tool that utilizes a ResNet50 model trained on CIFAR-100 classes. The app allows users to classify images by either uploading their own images or selecting from a set of predefined images.
+Long-tailed data distributions pose significant challenges in machine learning, particularly in achieving balanced model performance across both head and tail classes. In real-world scenarios, such as medical diagnosis, wildlife monitoring, and multi-modal fusion, the class imbalance inherent in long-tailed datasets often leads to over-fitting to dominant classes and poor generalization for minority classes. This study explores advanced learning strategies tailored for long-tailed data, emphasizing the use of Decoupled Loss functions designed specifically for head and tail classes. Moreover, we analyze the disadvantages of current methods, particularly their lack of focus on addressing shared visual patterns across head and tail classes. Some images in both classes contain similar patches that do not contribute effectively to model performance. To address this, we propose a Patch-Based Decoupled Student-Teacher Knowledge Distillation framework, which selectively refines patch-level feature learning and leverages separate optimization strategies for head and tail classes. Our approach is evaluated on benchmark datasets such as CIFAR-10-LT, CIFAR-100-LT, Stanford-Cars-LT and Caltech-256-LT, demonstrating improved in classification accuracy for tail classes while preserving overall model reliability. This study provides valuable insights into different challenges and the possible way around towards mitigating the challenges of long-tailed distributions, advancing the robustness and fairness of machine learning systems in real-world applications.
+This project is a web-based image classification tool that utilizes a Teacher-Student model on long tailed data. The app allows users to classify images by either uploading their own images or selecting from a set of predefined images.
 
 ## Features
 
@@ -41,9 +42,22 @@ This project is a web-based image classification tool that utilizes a ResNet50 m
     pip install -r requirements.txt
     ```
 
-4. **Add the saved models:**
-
-    Place your `teacher_model.pth` and `student_model.pth` files in a `saved_model` directory in the project root.
+3. **Training the models:**
+    Note :- Most of the datasets used in this experiments can be directly fetch fro the Pytroch library.
+   Step 1 : Train the teacher model
+    ```bash
+    cd ./Our_proposal
+    python teacher.py
+    ```
+    Step 2 : Do Knowledge Distillation for a Student Model. Update the teacher model directory in the code line 508.
+    ```bash
+    cd ./Our_proposal
+    python student.py
+    ```
+    
+5. **Check your saved models:**
+    
+    After training you can put your `teacher_model.pth` and `student_model.pth` files in a `saved_model` directory in the project root.
 
 ## Predefined Images
 
