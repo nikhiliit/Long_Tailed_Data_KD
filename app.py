@@ -35,7 +35,7 @@ transform = transforms.Compose([
 
 # Load the model function
 def load_model(model_type='teacher'):
-    model_path = './saved_model/teacher_model.pth' if model_type == 'teacher' else './saved_model/student_model.pth'
+    model_path = './models/teacher_model.pth' if model_type == 'teacher' else './models/student_model.pth'
     model = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
     model.fc = torch.nn.Linear(model.fc.in_features, 100)
     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
